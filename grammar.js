@@ -196,7 +196,7 @@ export default grammar({
         $._expression,
         optional(seq($.kwd_witness, $._expression))
       )),
-      ';'
+      optional(';')
     ),
 
     import_declaration: $ => seq(
@@ -272,15 +272,15 @@ export default grammar({
         choice(':=', ':|'), 
         $._expression,
         optional(seq($.kwd_witness, $._expression))
-      )), 
-      ';'
+      )),
+      optional(';')
     ),
 
     assignment: $ => seq(
       sep1($._assignment_lhs, ','),
-      choice(':=', ':|'), 
+      choice(':=', ':|'),
       sep1($._expression, ','),
-      ';'
+      optional(';')
     ),
 
     _assignment_lhs: $ => choice(
@@ -322,13 +322,13 @@ export default grammar({
     assume_statement: $ => seq('assume', optional(seq($.identifier, ':')), $._expression, ';'),
     expect_statement: $ => seq('expect', $._expression, optional(seq(',', $._expression)), ';'),
     reveal_statement: $ => seq('reveal', sep1($._expression, ','), ';'),
-    
+
     print_statement: $ => seq('print', sep($._expression, ','), ';'),
     return_statement: $ => seq('return', optional(sep($._expression, ',')), ';'),
     yield_statement: $ => seq('yield', optional(sep($._expression, ',')), ';'),
     break_statement: $ => seq('break', optional($.identifier), ';'),
     continue_statement: $ => seq('continue', optional($.identifier), ';'),
-    
+
     modify_statement: $ => seq('modify', sep1($._expression, ','), optional($.block), ';'),
 
     calc_statement: $ => seq(
