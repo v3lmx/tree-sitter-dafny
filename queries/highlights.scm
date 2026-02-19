@@ -1,5 +1,4 @@
 ; SPDX-FileCopyrightText: 2026 Oscar Bender-Stone <oscar-bender-stone@protonmail.com>
-; SPDX-FileContributor: Gemini (Google)
 ; SPDX-License-Identifier: MIT
 
 ;; Keywords
@@ -12,22 +11,15 @@
   "newtype"
   "type"
   "iterator"
-  "method"
-  "function"
-  "predicate"
-  "lemma"
-  "constructor"
   "const"
   "import"
   "opened"
   "var"
   "refines"
   "extends"
-  "returns"
-  "yields"
   "abstract"
-  "static"
   "ghost"
+  "static"
   "provides"
   "reveals"
 ] @keyword
@@ -36,21 +28,35 @@
 (kwd_export) @keyword
 (kwd_provides) @keyword
 (kwd_reveals) @keyword
-(kwd_witness) @keyword
+
+[
+  "method"
+  "function"
+  "predicate"
+  "lemma"
+  "constructor"
+] @keyword.function
 
 [
   "if"
   "then"
   "else"
-  "while"
   "match"
   "case"
+] @keyword.conditional
+
+[
+  "while"
   "break"
   "continue"
+] @keyword.repeat
+
+[
   "return"
   "yield"
-  "print"
-] @keyword.control
+  "returns"
+  "yields"
+] @keyword.return
 
 [
   "requires"
@@ -59,7 +65,10 @@
   "reads"
   "decreases"
   "invariant"
-] @keyword.function
+] @keyword.modifier
+
+;; witness is a named node (kwd_witness) in the grammar
+(kwd_witness) @keyword.modifier
 
 [
   "assert"
@@ -69,17 +78,14 @@
   "calc"
   "modify"
   "label"
+  "print"
 ] @keyword
 
 [
   "forall"
   "exists"
-  "set"
-  "iset"
-  "map"
-  "imap"
-  "seq"
-  "multiset"
+  "in"
+  "!in"
 ] @keyword.operator
 
 ;; Operators
@@ -87,7 +93,7 @@
   "==" "!=" "<" "<=" ">" ">="
   "&&" "||" "==>" "<==" "<==>"
   "+" "-" "*" "/" "%"
-  ":=" ":|" "::" "in" "!in" "!!"
+  ":=" ":|" "::" "!!"
 ] @operator
 
 ;; Punctuation
@@ -112,7 +118,7 @@
 (primitive_type) @type.builtin
 (collection_type) @type.builtin
 (tuple_type) @type
-(type_synonym (identifier) @type)
+(type_synonym (identifier) @type.definition)
 (class_definition (identifier) @type)
 (trait_definition (identifier) @type)
 (datatype_definition (identifier) @type)
@@ -120,8 +126,8 @@
 (newtype_definition (identifier) @type)
 
 ;; Identifiers
-(module_definition (identifier) @namespace)
-(import_declaration (identifier) @namespace)
+(module_definition (identifier) @module)
+(import_declaration (identifier) @module)
 
 (method_definition (identifier) @function.method)
 (function_definition (identifier) @function)
@@ -138,10 +144,10 @@
 (attributes (identifier) @attribute)
 
 ;; Literals
-(number) @constant.numeric
+(number) @number
 (string) @string
-(char) @string.special
-(boolean) @constant.builtin
+(char) @character
+(boolean) @boolean
 (null_literal) @constant.builtin
 (this_literal) @variable.builtin
 
