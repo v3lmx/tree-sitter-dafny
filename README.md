@@ -12,3 +12,4 @@ Adapted from the current [Dafny homepage](https://dafny.org/). Displayed in heli
 
 ## Tested Text Editors
 - Helix
+- Neovim
