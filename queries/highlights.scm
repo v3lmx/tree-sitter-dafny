@@ -20,6 +20,7 @@
   "abstract"
   "ghost"
   "static"
+  "opaque"
   "provides"
   "reveals"
 ] @keyword
@@ -35,6 +36,12 @@
   "predicate"
   "lemma"
   "constructor"
+  "twostate function"
+  "twostate predicate"
+  "least predicate"
+  "greatest predicate"
+  "least lemma"
+  "greatest lemma"
 ] @keyword.function
 
 [
@@ -47,6 +54,9 @@
 
 [
   "while"
+  "for"
+  "to"
+  "downto"
   "break"
   "continue"
 ] @keyword.repeat
@@ -79,6 +89,14 @@
   "modify"
   "label"
   "print"
+  "by"
+  "into"
+  "new"
+  "old"
+  "fresh"
+  "unchanged"
+  "as"
+  "is"
 ] @keyword
 
 [
@@ -86,6 +104,12 @@
   "exists"
   "in"
   "!in"
+  "set"
+  "iset"
+  "map"
+  "imap"
+  "seq"
+  "multiset"
 ] @keyword.operator
 
 ;; Operators
@@ -93,7 +117,9 @@
   "==" "!=" "<" "<=" ">" ">="
   "&&" "||" "==>" "<==" "<==>"
   "+" "-" "*" "/" "%"
-  ":=" ":|" "::" "!!"
+  ":=" ":|" "::" "!!" ":-"
+  "->" "-->" "~>"
+  ".."
 ] @operator
 
 ;; Punctuation
@@ -118,6 +144,9 @@
 (primitive_type) @type.builtin
 (collection_type) @type.builtin
 (tuple_type) @type
+(arrow_type ["->" "-->" "~>"] @type)
+(generic_type (identifier) @type)
+(qualified_type (identifier) @type)
 (type_synonym (identifier) @type.definition)
 (class_definition (identifier) @type)
 (trait_definition (identifier) @type)
@@ -128,13 +157,16 @@
 ;; Identifiers
 (module_definition (identifier) @module)
 (import_declaration (identifier) @module)
+(qualified_name (identifier) @module)
 
 (method_definition (identifier) @function.method)
 (function_definition (identifier) @function)
 (lemma_definition (identifier) @function)
 (iterator_definition (identifier) @function)
 
-(call_expression (identifier) @function.call)
+(call_expression (_) @function.call
+  (#match? @function.call "^[a-zA-Z]"))
+(member_expression "." (identifier) @property)
 
 (const_definition (identifier) @constant)
 (var_decl (identifier) @variable)

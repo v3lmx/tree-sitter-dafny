@@ -13,6 +13,7 @@
   (block)
   (if_statement)
   (while_statement)
+  (for_statement)
   (match_statement)
   (comment)
 ] @fold

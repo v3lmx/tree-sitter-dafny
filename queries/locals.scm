@@ -12,6 +12,7 @@
 (block) @local.scope
 (if_statement) @local.scope
 (while_statement) @local.scope
+(for_statement) @local.scope
 (match_statement) @local.scope
 (forall_statement) @local.scope
 (quantifier_expression) @local.scope

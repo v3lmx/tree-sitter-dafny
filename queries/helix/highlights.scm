@@ -28,8 +28,15 @@
   "abstract"
   "static"
   "ghost"
+  "opaque"
   "provides"
   "reveals"
+  "twostate function"
+  "twostate predicate"
+  "least predicate"
+  "greatest predicate"
+  "least lemma"
+  "greatest lemma"
 ] @keyword
 
 ;; Named keyword nodes (defined as named rules in grammar.js)
@@ -43,6 +50,9 @@
   "then"
   "else"
   "while"
+  "for"
+  "to"
+  "downto"
   "match"
   "case"
   "break"
@@ -69,6 +79,14 @@
   "calc"
   "modify"
   "label"
+  "by"
+  "into"
+  "new"
+  "old"
+  "fresh"
+  "unchanged"
+  "as"
+  "is"
 ] @keyword
 
 [
@@ -87,7 +105,9 @@
   "==" "!=" "<" "<=" ">" ">="
   "&&" "||" "==>" "<==" "<==>"
   "+" "-" "*" "/" "%"
-  ":=" ":|" "::" "in" "!in" "!!"
+  ":=" ":|" "::" "in" "!in" "!!" ":-"
+  "->" "-->" "~>"
+  ".."
 ] @operator
 
 ;; Punctuation
@@ -112,6 +132,9 @@
 (primitive_type) @type.builtin
 (collection_type) @type.builtin
 (tuple_type) @type
+(arrow_type ["->" "-->" "~>"] @type)
+(generic_type (identifier) @type)
+(qualified_type (identifier) @type)
 (type_synonym (identifier) @type)
 (class_definition (identifier) @type)
 (trait_definition (identifier) @type)
@@ -122,13 +145,16 @@
 ;; Identifiers
 (module_definition (identifier) @namespace)
 (import_declaration (identifier) @namespace)
+(qualified_name (identifier) @namespace)
 
 (method_definition (identifier) @function.method)
 (function_definition (identifier) @function)
 (lemma_definition (identifier) @function)
 (iterator_definition (identifier) @function)
 
-(call_expression (identifier) @function.call)
+(call_expression (_) @function.call
+  (#match? @function.call "^[a-zA-Z]"))
+(member_expression "." (identifier) @variable.other.member)
 
 (const_definition (identifier) @constant)
 (var_decl (identifier) @variable)
