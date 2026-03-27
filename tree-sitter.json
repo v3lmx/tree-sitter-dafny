@@ -10,7 +10,10 @@
         "dfy"
       ],
       "injection-regex": "^dafny$",
-      "class-name": "TreeSitterDafny"
+      "class-name": "TreeSitterDafny",
+      "highlights": "queries/highlights.scm",
+      "locals": "queries/locals.scm",
+      "folds": "queries/folds.scm"
     }
   ],
   "metadata": {

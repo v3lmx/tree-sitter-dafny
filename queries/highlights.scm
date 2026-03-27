@@ -1,5 +1,4 @@
 ; SPDX-FileCopyrightText: 2026 Oscar Bender-Stone <oscar-bender-stone@protonmail.com>
-; SPDX-FileContributor: Gemini (Google)
 ; SPDX-License-Identifier: MIT
 
 ;; Keywords
@@ -12,55 +11,62 @@
   "newtype"
   "type"
   "iterator"
-  "method"
-  "function"
-  "predicate"
-  "lemma"
-  "constructor"
   "const"
   "import"
   "opened"
   "var"
   "refines"
   "extends"
-  "returns"
-  "yields"
   "abstract"
-  "static"
   "ghost"
+  "static"
   "opaque"
   "provides"
   "reveals"
-  "twostate function"
-  "twostate predicate"
-  "least predicate"
-  "greatest predicate"
-  "least lemma"
-  "greatest lemma"
 ] @keyword
 
 ;; Named keyword nodes (defined as named rules in grammar.js)
 (kwd_export) @keyword
 (kwd_provides) @keyword
 (kwd_reveals) @keyword
-(kwd_witness) @keyword
+
+[
+  "method"
+  "function"
+  "predicate"
+  "lemma"
+  "constructor"
+  "twostate function"
+  "twostate predicate"
+  "least predicate"
+  "greatest predicate"
+  "least lemma"
+  "greatest lemma"
+] @keyword.function
 
 [
   "if"
   "then"
   "else"
+  "match"
+  "case"
+] @keyword.conditional
+
+[
   "while"
   "for"
   "to"
   "downto"
-  "match"
-  "case"
   "break"
   "continue"
+] @keyword.repeat
+
+[
   "return"
   "yield"
-  "print"
-] @keyword.control
+  "returns"
+  "yields"
+] @keyword.return
 
 [
   "requires"
@@ -69,7 +75,10 @@
   "reads"
   "decreases"
   "invariant"
-] @keyword.function
+] @keyword.modifier
+
+;; witness is a named node (kwd_witness) in the grammar
+(kwd_witness) @keyword.modifier
 
 [
   "assert"
@@ -79,6 +88,7 @@
   "calc"
   "modify"
   "label"
+  "print"
   "by"
   "into"
   "new"
@@ -92,6 +102,8 @@
 [
   "forall"
   "exists"
+  "in"
+  "!in"
   "set"
   "iset"
   "map"
@@ -105,7 +117,7 @@
   "==" "!=" "<" "<=" ">" ">="
   "&&" "||" "==>" "<==" "<==>"
   "+" "-" "*" "/" "%"
-  ":=" ":|" "::" "in" "!in" "!!" ":-"
+  ":=" ":|" "::" "!!" ":-"
   "->" "-->" "~>"
   ".."
 ] @operator
@@ -135,7 +147,7 @@
 (arrow_type ["->" "-->" "~>"] @type)
 (generic_type (identifier) @type)
 (qualified_type (identifier) @type)
-(type_synonym (identifier) @type)
+(type_synonym (identifier) @type.definition)
 (class_definition (identifier) @type)
 (trait_definition (identifier) @type)
 (datatype_definition (identifier) @type)
@@ -143,9 +155,9 @@
 (newtype_definition (identifier) @type)
 
 ;; Identifiers
-(module_definition (identifier) @namespace)
-(import_declaration (identifier) @namespace)
-(qualified_name (identifier) @namespace)
+(module_definition (identifier) @module)
+(import_declaration (identifier) @module)
+(qualified_name (identifier) @module)
 
 (method_definition (identifier) @function.method)
 (function_definition (identifier) @function)
@@ -154,7 +166,7 @@
 
 (call_expression (_) @function.call
   (#match? @function.call "^[a-zA-Z]"))
-(member_expression "." (identifier) @variable.other.member)
+(member_expression "." (identifier) @property)
 
 (const_definition (identifier) @constant)
 (var_decl (identifier) @variable)
@@ -164,10 +176,10 @@
 (attributes (identifier) @attribute)
 
 ;; Literals
-(number) @constant.numeric
+(number) @number
 (string) @string
-(char) @string.special
-(boolean) @constant.builtin
+(char) @character
+(boolean) @boolean
 (null_literal) @constant.builtin
 (this_literal) @variable.builtin
 
